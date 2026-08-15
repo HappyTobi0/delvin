@@ -23,6 +23,25 @@
   const canvas = document.getElementById("game");
   const ctx = canvas.getContext("2d");
 
+  /* The game is drawn in a fixed 768x480 world space and upscaled to fill as
+     much of the window as fits, so gameplay is identical at any window size. */
+  let scale = 1;
+
+  function resize() {
+    const margin = 60; // room for the border and the controls line
+    scale = Math.min(window.innerWidth / VIEW_W, (window.innerHeight - margin) / VIEW_H);
+    scale = Math.max(1, Math.min(scale, 4));
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(VIEW_W * scale * dpr);
+    canvas.height = Math.round(VIEW_H * scale * dpr);
+    canvas.style.width = Math.round(VIEW_W * scale) + "px";
+    canvas.style.height = Math.round(VIEW_H * scale) + "px";
+    ctx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+  }
+
+  window.addEventListener("resize", resize);
+
   /* ---------------------------------------------------------------- input */
 
   const keys = Object.create(null);
@@ -1339,6 +1358,7 @@
     requestAnimationFrame(loop);
   }
 
+  resize();
   loadLevel(0);
   requestAnimationFrame(loop);
 
