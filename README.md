@@ -4,6 +4,7 @@ Vendor Onboarding Portal — a mini Vendor Management System for an HR/hiring te
 
 - `backend/` — FastAPI service with an in-memory vendor store
 - `frontend/` — React + TypeScript (Vite) UI
+- `game/` — Super Devin Bros., a Mario-style browser platformer (see `game/README.md`)
 
 ## Backend
 
